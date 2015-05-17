@@ -11,6 +11,9 @@ Word:<input type="file" name="word" id="file">(.htm .html only)<br>
 CSV:<input type="file" name="csv" id="file">(.csv .txt only)<br>
 <input name="" type="submit" value="送出">
 </form>
+Example File<br>
+<a href="example.html">example.html</a><br>
+<a href="example.csv">example.csv</a>
 </center>
 </body>
 </html>

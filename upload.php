@@ -12,7 +12,7 @@ if($_FILES["word"]["error"] != 0){
 	$error=false;
 }else{
 	$exname=pathinfo($_FILES["word"]["name"], PATHINFO_EXTENSION);
-	$wordname="word.".$exname;
+	$wordname="temp/word.".$exname;
 	if(!in_array($exname,array("htm","html"))){
 		echo "Word 格式錯誤<br>";
 		$error=false;
@@ -23,7 +23,7 @@ if($_FILES["csv"]["error"] != 0){
 	echo "CSV上傳失敗<br>";
 }else{
 	$exname=pathinfo($_FILES["csv"]["name"], PATHINFO_EXTENSION);
-	$csvname="csv.".$exname;
+	$csvname="temp/csv.".$exname;
 	if(!in_array($exname,array("csv","txt"))){
 		echo "CSV 格式錯誤<br>";
 	}
@@ -31,7 +31,6 @@ if($_FILES["csv"]["error"] != 0){
 }
 if($error){
 	$newpagehtml="<span lang=EN-US style='mso-font-kerning:0pt'><br clear=all style='page-break-before:always'></span>";
-	
 	$wordfile=file($wordname);
 	$csvfile=file($csvname);
 	foreach($wordfile as $index => $temp){
@@ -58,7 +57,7 @@ if($error){
 		}else {
 			$count=substr_count($html_temp,$line[0]);
 			for($i=1;$i<=$count;$i++){
-				$html_temp=preg_replace("/".$line[0]."/",$line[$i],$html_temp,1);
+				$html_temp=preg_replace("/".$line[0]."/",@$line[$i],$html_temp,1);
 			}
 		}
 	}
@@ -67,18 +66,21 @@ if($error){
 		$html.=$wordfile[$i];
 	}
 	
-	file_put_contents("produce.html",$html);
+	file_put_contents("temp/produce.html",$html);
 	
 	include("word.php");
 	$word=new word; 
 	$word->start();
 	echo $html;
-	$word->save("produce.doc");
+	$word->save("temp/produce.doc");
 	
 	unlink($wordname);
 	unlink($csvname);
 ?>
-	<a href="produce.doc">下載連結</a>
+	<a href="temp/produce.doc">下載連結(doc)</a>
+	<a href="temp/produce.html">下載連結(html)</a>
+	<br><br>
+	<a href="./">建立新的</a>
 	<script>document.title="Word產生完成"</script>
 <?php
 }else {
