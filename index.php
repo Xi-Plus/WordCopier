@@ -14,6 +14,10 @@ CSV:<input type="file" name="csv" id="file">(.csv .txt only)<br>
 Example File<br>
 <a href="example.html">example.html</a><br>
 <a href="example.csv">example.csv</a>
+<hr>
+<?php
+@include("../function/developer.php");
+?>
 </center>
 </body>
 </html>
